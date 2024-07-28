@@ -9,12 +9,16 @@ class DaftarMakanan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth > 600;
+
     return Container(
+      width: isWideScreen ? (screenWidth / 2) - 40 : screenWidth - 50,
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(20),
       ),
-      margin: const EdgeInsets.only(left: 25),
+      margin: const EdgeInsets.all(15),
       padding: const EdgeInsets.all(25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +33,7 @@ class DaftarMakanan extends StatelessWidget {
             style: GoogleFonts.dmSerifDisplay(fontSize: 20),
           ),
           SizedBox(
-            width: 160,
+            width: double.infinity,
             height: 25,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +56,7 @@ class DaftarMakanan extends StatelessWidget {
                       style: const TextStyle(color: Colors.grey),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
