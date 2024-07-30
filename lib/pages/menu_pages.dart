@@ -78,7 +78,6 @@ class _MenuPageState extends State<MenuPage> {
   @override
   void initState() {
     super.initState();
-    // Initialize the favorites list with false values
     favorites = List<bool>.filled(menuMakanan.length, false);
   }
 
@@ -86,14 +85,6 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isWideScreen = screenWidth > 600;
-
-    final filteredMenu = menuMakanan
-        .where((makanan) =>
-            makanan.nama.toLowerCase().contains(searchQuery.toLowerCase()))
-        .toList();
-
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 208, 172, 172),
       appBar: AppBar(
@@ -108,122 +99,135 @@ class _MenuPageState extends State<MenuPage> {
           style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                padding: const EdgeInsets.all(25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isWideScreen = constraints.maxWidth > 600;
+
+          final filteredMenu = menuMakanan
+              .where((makanan) =>
+                  makanan.nama.toLowerCase().contains(searchQuery.toLowerCase()))
+              .toList();
+
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: const EdgeInsets.all(25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Dapatkan Diskon 15%',
-                          style: GoogleFonts.dmSerifDisplay(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Dapatkan Diskon 15%',
+                              style: GoogleFonts.dmSerifDisplay(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            MyButton(
+                              text: "Redeem",
+                              onTap: () {},
+                            )
+                          ],
                         ),
-                        const SizedBox(height: 10),
-                        MyButton(
-                          text: "Redeem",
-                          onTap: () {},
-                        )
+                        Image.asset(
+                          'images/fried-rice.png',
+                          height: 80,
+                        ),
                       ],
                     ),
-                    Image.asset(
-                      'images/fried-rice.png',
-                      height: 80,
+                  ),
+                  const SizedBox(height: 20),
+                  TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        searchQuery = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        hintText: "Cari disini..."),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    "List Menu",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[800],
+                      fontSize: 18,
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                onChanged: (value) {
-                  setState(() {
-                    searchQuery = value;
-                  });
-                },
-                decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    hintText: "Cari disini..."),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                "List Menu",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[800],
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(height: 10),
-              isWideScreen
-                  ? GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 3 / 2,
-                      ),
-                      itemCount: filteredMenu.length,
-                      itemBuilder: (context, index) {
-                        return DaftarMakanan(
-                          makanan: filteredMenu[index],
-                          isFavorite: favorites[
-                              menuMakanan.indexOf(filteredMenu[index])],
-                          onFavoriteToggle: () {
-                            setState(() {
-                              favorites[menuMakanan
-                                      .indexOf(filteredMenu[index])] =
-                                  !favorites[
-                                      menuMakanan.indexOf(filteredMenu[index])];
-                            });
+                  ),
+                  const SizedBox(height: 10),
+                  isWideScreen
+                      ? GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: constraints.maxWidth > 700 ? 3 : 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: (constraints.maxWidth / 2 - 20) /
+                                ((constraints.maxWidth / 2 - 20) * 1.5),
+                          ),
+                          itemCount: filteredMenu.length,
+                          itemBuilder: (context, index) {
+                            return DaftarMakanan(
+                              makanan: filteredMenu[index],
+                              isFavorite: favorites[
+                                  menuMakanan.indexOf(filteredMenu[index])],
+                              onFavoriteToggle: () {
+                                setState(() {
+                                  favorites[menuMakanan
+                                          .indexOf(filteredMenu[index])] =
+                                      !favorites[menuMakanan
+                                          .indexOf(filteredMenu[index])];
+                                });
+                              },
+                            );
                           },
-                        );
-                      },
-                    )
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: filteredMenu.length,
-                      itemBuilder: (context, index) {
-                        return DaftarMakanan(
-                          makanan: filteredMenu[index],
-                          isFavorite: favorites[
-                              menuMakanan.indexOf(filteredMenu[index])],
-                          onFavoriteToggle: () {
-                            setState(() {
-                              favorites[menuMakanan
-                                      .indexOf(filteredMenu[index])] =
-                                  !favorites[
-                                      menuMakanan.indexOf(filteredMenu[index])];
-                            });
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: filteredMenu.length,
+                          itemBuilder: (context, index) {
+                            return DaftarMakanan(
+                              makanan: filteredMenu[index],
+                              isFavorite: favorites[
+                                  menuMakanan.indexOf(filteredMenu[index])],
+                              onFavoriteToggle: () {
+                                setState(() {
+                                  favorites[menuMakanan
+                                          .indexOf(filteredMenu[index])] =
+                                      !favorites[menuMakanan
+                                          .indexOf(filteredMenu[index])];
+                                });
+                              },
+                            );
                           },
-                        );
-                      },
-                    ),
-            ],
-          ),
-        ),
+                        ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
