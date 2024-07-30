@@ -104,8 +104,9 @@ class _MenuPageState extends State<MenuPage> {
           final isWideScreen = constraints.maxWidth > 600;
 
           final filteredMenu = menuMakanan
-              .where((makanan) =>
-                  makanan.nama.toLowerCase().contains(searchQuery.toLowerCase()))
+              .where((makanan) => makanan.nama
+                  .toLowerCase()
+                  .contains(searchQuery.toLowerCase()))
               .toList();
 
           return SingleChildScrollView(
@@ -121,29 +122,31 @@ class _MenuPageState extends State<MenuPage> {
                     ),
                     padding: const EdgeInsets.all(25),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Dapatkan Diskon 15%',
-                              style: GoogleFonts.dmSerifDisplay(
-                                color: Colors.white,
-                                fontSize: 18,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Dapatkan Diskon 15%',
+                                style: GoogleFonts.dmSerifDisplay(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 10),
-                            MyButton(
-                              text: "Redeem",
-                              onTap: () {},
-                            )
-                          ],
+                              const SizedBox(height: 10),
+                              MyButton(
+                                text: "Redeem",
+                                onTap: () {},
+                              )
+                            ],
+                          ),
                         ),
-                        Image.asset(
-                          'images/fried-rice.png',
-                          height: 80,
-                        ),
+                        if (constraints.maxWidth > 350)
+                          Image.asset(
+                            'images/fried-rice.png',
+                            height: 80,
+                          ),
                       ],
                     ),
                   ),
@@ -179,7 +182,8 @@ class _MenuPageState extends State<MenuPage> {
                       ? GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: constraints.maxWidth > 700 ? 3 : 2,
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10,
