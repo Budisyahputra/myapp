@@ -16,35 +16,40 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   List menuMakanan = [
     Makanan(
-      nama: "Mie Kukus",
-      harga: "25.000",
-      gambar: "images/mie.png",
-      rating: "7.0",
-    ),
+        nama: "Mie Kukus",
+        harga: "25.000",
+        gambar: "images/mie.png",
+        rating: "7.0",
+        deskripsi:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non egestas ligula, eu cursus libero. Integer quis dictum enim. Vivamus blandit commodo libero. Vivamus laoreet feugiat lorem et suscipit. Pellentesque."),
     Makanan(
-      nama: "Bakso",
-      harga: "40.000",
-      gambar: "images/bakso.png",
-      rating: "8.2",
-    ),
+        nama: "Bakso",
+        harga: "40.000",
+        gambar: "images/bakso.png",
+        rating: "8.2",
+        deskripsi:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non egestas ligula, eu cursus libero. Integer quis dictum enim. Vivamus blandit commodo libero. Vivamus laoreet feugiat lorem et suscipit. Pellentesque."),
     Makanan(
-      nama: "Nasi Goreng",
-      harga: "20.000",
-      gambar: "images/fried-rice.png",
-      rating: "9.1",
-    ),
+        nama: "Nasi Goreng",
+        harga: "20.000",
+        gambar: "images/fried-rice.png",
+        rating: "9.1",
+        deskripsi:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non egestas ligula, eu cursus libero. Integer quis dictum enim. Vivamus blandit commodo libero. Vivamus laoreet feugiat lorem et suscipit. Pellentesque."),
     Makanan(
-      nama: "Nasi Goreng",
-      harga: "20.000",
-      gambar: "images/fried-rice.png",
-      rating: "9.1",
-    ),
+        nama: "Nasi Goreng",
+        harga: "20.000",
+        gambar: "images/fried-rice.png",
+        rating: "9.1",
+        deskripsi:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non egestas ligula, eu cursus libero. Integer quis dictum enim. Vivamus blandit commodo libero. Vivamus laoreet feugiat lorem et suscipit. Pellentesque."),
     Makanan(
-      nama: "Nasi Goreng",
-      harga: "20.000",
-      gambar: "images/fried-rice.png",
-      rating: "9.1",
-    ),
+        nama: "Nasi Goreng",
+        harga: "20.000",
+        gambar: "images/fried-rice.png",
+        rating: "9.1",
+        deskripsi:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non egestas ligula, eu cursus libero. Integer quis dictum enim. Vivamus blandit commodo libero. Vivamus laoreet feugiat lorem et suscipit. Pellentesque."),
   ];
 
   @override
@@ -53,7 +58,7 @@ class _MenuPageState extends State<MenuPage> {
     final isWideScreen = screenWidth > 600;
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 189, 181, 181),
+      backgroundColor: const Color.fromARGB(255, 208, 172, 172),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -85,7 +90,7 @@ class _MenuPageState extends State<MenuPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Dapatkan Diskon 30%',
+                          'Dapatkan Diskon 15%',
                           style: GoogleFonts.dmSerifDisplay(
                             color: Colors.white,
                             fontSize: 18,
@@ -132,7 +137,8 @@ class _MenuPageState extends State<MenuPage> {
                   ? GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio: 3 / 2,
                       ),
@@ -150,8 +156,6 @@ class _MenuPageState extends State<MenuPage> {
                       ),
                     ),
               const SizedBox(height: 20),
-
-              
               Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[100],

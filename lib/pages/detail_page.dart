@@ -13,12 +13,12 @@ class DetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(makanan.nama),
-        backgroundColor: Colors.orange,
+        backgroundColor: const Color.fromARGB(255, 134, 62, 56),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
               makanan.gambar,
@@ -38,8 +38,8 @@ class DetailPage extends StatelessWidget {
                 color: Colors.grey[700],
               ),
             ),
-            const SizedBox(height: 10),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   Icons.star,
@@ -53,8 +53,9 @@ class DetailPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              'Deskripsi makanan ini bisa ditambahkan di sini.',
+              makanan.deskripsi,
               style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

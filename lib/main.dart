@@ -26,8 +26,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Terima kasih atas icon-nya
-// Credit
-// <a href="https://www.flaticon.com/free-icons/bakso" title="bakso icons">Bakso icons created by Asep Saripudin - Flaticon</a>
-// <a href="https://www.flaticon.com/free-icons/mie" title="mie icons">Mie icons created by Royyan Wijaya - Flaticon</a>
-// <a href="https://www.flaticon.com/free-icons/lunch" title="lunch icons">Lunch icons created by Freepik - Flaticon</a>
+// Terima kasih atas icon-nya. Credit:
+// https://www.flaticon.com/free-icons/bakso created by Asep Saripudin
+// https://www.flaticon.com/free-icons/mie created by Royyan Wijaya
+// https://www.flaticon.com/free-icons/lunch created by Freepik
