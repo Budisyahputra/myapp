@@ -14,7 +14,7 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  List menuMakanan = [
+  final List<Makanan> menuMakanan = [
     Makanan(
         nama: "Mie Kukus",
         harga: "25.000",
@@ -37,25 +37,62 @@ class _MenuPageState extends State<MenuPage> {
         deskripsi:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non egestas ligula, eu cursus libero. Integer quis dictum enim. Vivamus blandit commodo libero. Vivamus laoreet feugiat lorem et suscipit. Pellentesque."),
     Makanan(
-        nama: "Nasi Goreng",
-        harga: "20.000",
-        gambar: "images/fried-rice.png",
-        rating: "9.1",
+        nama: "Nasi Kuning",
+        harga: "22.000",
+        gambar: "images/biryani.png",
+        rating: "8.0",
         deskripsi:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non egestas ligula, eu cursus libero. Integer quis dictum enim. Vivamus blandit commodo libero. Vivamus laoreet feugiat lorem et suscipit. Pellentesque."),
     Makanan(
-        nama: "Nasi Goreng",
+        nama: "Nasi Gemuk",
+        harga: "15.000",
+        gambar: "images/iftar.png",
+        rating: "7.5",
+        deskripsi:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non egestas ligula, eu cursus libero. Integer quis dictum enim. Vivamus blandit commodo libero. Vivamus laoreet feugiat lorem et suscipit. Pellentesque."),
+    Makanan(
+        nama: "Salad",
+        harga: "10.000",
+        gambar: "images/salad.png",
+        rating: "7.9",
+        deskripsi:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non egestas ligula, eu cursus libero. Integer quis dictum enim. Vivamus blandit commodo libero. Vivamus laoreet feugiat lorem et suscipit. Pellentesque."),
+    Makanan(
+        nama: "Kebab",
         harga: "20.000",
-        gambar: "images/fried-rice.png",
-        rating: "9.1",
+        gambar: "images/taco.png",
+        rating: "7.6",
+        deskripsi:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non egestas ligula, eu cursus libero. Integer quis dictum enim. Vivamus blandit commodo libero. Vivamus laoreet feugiat lorem et suscipit. Pellentesque."),
+    Makanan(
+        nama: "Lobster Goreng",
+        harga: "50.000",
+        gambar: "images/lobster.png",
+        rating: "9.5",
         deskripsi:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non egestas ligula, eu cursus libero. Integer quis dictum enim. Vivamus blandit commodo libero. Vivamus laoreet feugiat lorem et suscipit. Pellentesque."),
   ];
+
+  List<bool> favorites = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the favorites list with false values
+    favorites = List<bool>.filled(menuMakanan.length, false);
+  }
+
+  String searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isWideScreen = screenWidth > 600;
+
+    final filteredMenu = menuMakanan
+        .where((makanan) =>
+            makanan.nama.toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList();
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 208, 172, 172),
@@ -112,6 +149,11 @@ class _MenuPageState extends State<MenuPage> {
               ),
               const SizedBox(height: 20),
               TextField(
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value;
+                  });
+                },
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(color: Colors.white),
@@ -142,65 +184,43 @@ class _MenuPageState extends State<MenuPage> {
                         crossAxisCount: 2,
                         childAspectRatio: 3 / 2,
                       ),
-                      itemCount: menuMakanan.length,
-                      itemBuilder: (context, index) => DaftarMakanan(
-                        makanan: menuMakanan[index],
-                      ),
+                      itemCount: filteredMenu.length,
+                      itemBuilder: (context, index) {
+                        return DaftarMakanan(
+                          makanan: filteredMenu[index],
+                          isFavorite: favorites[
+                              menuMakanan.indexOf(filteredMenu[index])],
+                          onFavoriteToggle: () {
+                            setState(() {
+                              favorites[menuMakanan
+                                      .indexOf(filteredMenu[index])] =
+                                  !favorites[
+                                      menuMakanan.indexOf(filteredMenu[index])];
+                            });
+                          },
+                        );
+                      },
                     )
                   : ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: menuMakanan.length,
-                      itemBuilder: (context, index) => DaftarMakanan(
-                        makanan: menuMakanan[index],
-                      ),
+                      itemCount: filteredMenu.length,
+                      itemBuilder: (context, index) {
+                        return DaftarMakanan(
+                          makanan: filteredMenu[index],
+                          isFavorite: favorites[
+                              menuMakanan.indexOf(filteredMenu[index])],
+                          onFavoriteToggle: () {
+                            setState(() {
+                              favorites[menuMakanan
+                                      .indexOf(filteredMenu[index])] =
+                                  !favorites[
+                                      menuMakanan.indexOf(filteredMenu[index])];
+                            });
+                          },
+                        );
+                      },
                     ),
-              const SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Image.asset(
-                          'images/fried-rice.png',
-                          height: 60,
-                        ),
-                        const SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Nasi Goreng",
-                              style: GoogleFonts.dmSerifDisplay(
-                                fontSize: 18,
-                              ),
-                            ),
-                            const SizedBox(height: 5),
-                            Text(
-                              'Rp20.000',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey[700],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const Icon(
-                      Icons.favorite_outline,
-                      color: Colors.red,
-                      size: 28,
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),

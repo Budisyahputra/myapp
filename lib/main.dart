@@ -30,3 +30,9 @@ class MyApp extends StatelessWidget {
 // https://www.flaticon.com/free-icons/bakso created by Asep Saripudin
 // https://www.flaticon.com/free-icons/mie created by Royyan Wijaya
 // https://www.flaticon.com/free-icons/lunch created by Freepik
+// https://www.flaticon.com/free-icons/indian created by Freepik
+// https://www.flaticon.com/free-icons/iftar" created by Freepik
+// https://www.flaticon.com/free-icons/biryani" Freepik
+// https://www.flaticon.com/free-icons/taco" created by Freepik
+// https://www.flaticon.com/free-icons/salad" created by Freepik
+// https://www.flaticon.com/free-icons/lobster" created by Freepik

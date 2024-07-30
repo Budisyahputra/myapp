@@ -6,7 +6,15 @@ import '../models/makanan.dart';
 
 class DaftarMakanan extends StatelessWidget {
   final Makanan makanan;
-  const DaftarMakanan({super.key, required this.makanan});
+  final bool isFavorite;
+  final VoidCallback onFavoriteToggle;
+
+  const DaftarMakanan({
+    super.key,
+    required this.makanan,
+    required this.isFavorite,
+    required this.onFavoriteToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,33 +50,35 @@ class DaftarMakanan extends StatelessWidget {
               makanan.nama,
               style: GoogleFonts.dmSerifDisplay(fontSize: 20),
             ),
-            SizedBox(
-              width: double.infinity,
-              height: 25,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Rp${makanan.harga}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow[800],
-                      ),
-                      Text(
-                        makanan.rating,
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ],
+            const SizedBox(height: 10),
+            Text(
+              'Rp${makanan.harga}',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[700],
               ),
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  color: Colors.yellow[800],
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  makanan.rating,
+                  style: const TextStyle(color: Colors.grey, fontSize: 16),
+                ),
+                const SizedBox(height: 5),
+                IconButton(
+                  icon: Icon(
+                    isFavorite ? Icons.favorite : Icons.favorite_outline,
+                    color: Colors.red,
+                  ),
+                  onPressed: onFavoriteToggle,
+                ),
+              ],
             ),
           ],
         ),
